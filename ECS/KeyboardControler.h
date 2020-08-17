@@ -79,7 +79,6 @@ public:
                               mouseY
             );
         }else if(!mouseBresenhaim.empty()){
-            std::cout<<mouseBresenhaim.front() - transform->position.x<< "\n";
             if((mouseBresenhaim.front() - transform->position.x) >= 0){
                 sprite->spriteFlip = SDL_FLIP_NONE;
                 sprite->Play("Walk");
@@ -100,7 +99,7 @@ public:
 
 
     void bresenham(int x1, int y1, int x2, int y2){
-        int dx,dy,incYi,incXi,incYr,incXr,avr,av,avi,x,y,temp;
+        int dx,dy,incYi,incXi,incYr,incXr,avr,av,avi,x,y,temp,n = 2;
         dx=x2-x1;
         dy=y2-y1;
         if(dy >= 0){
@@ -133,8 +132,11 @@ public:
         avi = av-dx;
 
         while(x != x2){
-            mouseBresenhaim.push(x);
-            mouseBresenhaim.push(y);
+            if(n == 2){
+                mouseBresenhaim.push(x);
+                mouseBresenhaim.push(y);
+                n = 0;
+            }
             if(av >= 0){
                 x = x+incXi;
                 y = y+ incYi;
@@ -144,6 +146,7 @@ public:
                 y = y+incYr;
                 av = av+avr;
             }
+            n++;
         }
 
 
